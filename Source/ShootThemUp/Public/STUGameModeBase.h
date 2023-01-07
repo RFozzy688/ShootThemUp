@@ -15,7 +15,5 @@ class SHOOTTHEMUP_API ASTUGameModeBase : public AGameModeBase
     GENERATED_BODY()
 
 private:
-    // русский
-    // русский
     float aa;
 };
