@@ -7,6 +7,7 @@
 #include "STUBaseCharacter.generated.h"
 
 class UCameraComponent;
+class USpringArmComponent;
 
 UCLASS()
 class SHOOTTHEMUP_API ASTUBaseCharacter : public ACharacter
@@ -24,6 +25,9 @@ protected:
     UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Component")
     UCameraComponent* CameraComponent;
 
+    UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Component")
+    USpringArmComponent* SpringArmComponent;
+
 public:	
     // Called every frame
     virtual void Tick(float DeltaTime) override;
@@ -34,5 +38,7 @@ public:
 private:
     void MoveForward(float Amount);
     void MoveRight(float Amount);
+    void LookUp(float Amount);
+    void TurnAround(float Amount);
 
 };
