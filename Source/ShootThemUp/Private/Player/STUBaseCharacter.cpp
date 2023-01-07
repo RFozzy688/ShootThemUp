@@ -3,6 +3,7 @@
 
 #include "Player/STUBaseCharacter.h"
 #include "Camera/CameraComponent.h"
+#include "Components/InputComponent.h"
 
 // Sets default values
 ASTUBaseCharacter::ASTUBaseCharacter()
@@ -33,5 +34,21 @@ void ASTUBaseCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCo
 {
     Super::SetupPlayerInputComponent(PlayerInputComponent);
 
+    PlayerInputComponent->BindAxis("MoveForward", this, &ASTUBaseCharacter::MoveForward);
+    PlayerInputComponent->BindAxis("MoveRight", this, &ASTUBaseCharacter::MoveRight);
+}
+
+void ASTUBaseCharacter::MoveForward(float Amount)
+{
+    // данная ф-ция существует у каждого пауна
+    AddMovementInput(
+        GetActorForwardVector(), // направление движения пауна
+        Amount                  // scale - число на которое будет домножатся по коор-но наш вектор направления
+        );
+}
+
+void ASTUBaseCharacter::MoveRight(float Amount)
+{
+    AddMovementInput(GetActorRightVector(), Amount);
 }
 
