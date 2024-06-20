@@ -2,6 +2,9 @@
 
 
 #include "Components/STUHealthComponent.h"
+#include "GameFramework/Actor.h"
+
+DEFINE_LOG_CATEGORY_STATIC(LogHealthComponent, All, All);
 
 // Sets default values for this component's properties
 USTUHealthComponent::USTUHealthComponent()
@@ -21,6 +24,13 @@ void USTUHealthComponent::BeginPlay()
 
     Health = MaxHealth;
     
+    // получение Actor-а который владеет этим компонентом т.е. нашего ASTUBaseCharacter
+    AActor* ComponentOwner = GetOwner();
+
+    if (ComponentOwner)
+    {
+        ComponentOwner->OnTakeAnyDamage.AddDynamic(this, &USTUHealthComponent::OnTakeAnyDamage);
+    }
 }
 
 
@@ -32,3 +42,8 @@ void USTUHealthComponent::TickComponent(float DeltaTime, ELevelTick TickType, FA
     // ...
 }
 
+void USTUHealthComponent::OnTakeAnyDamage(
+    AActor* DamagedActor, float Damage, const UDamageType* DamageType, AController* InstigatedBy, AActor* DamageCauser)
+{
+    Health -= Damage;
+}
