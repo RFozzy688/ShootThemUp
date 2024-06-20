@@ -46,4 +46,6 @@ void USTUHealthComponent::OnTakeAnyDamage(
     AActor* DamagedActor, float Damage, const UDamageType* DamageType, AController* InstigatedBy, AActor* DamageCauser)
 {
     Health -= Damage;
+
+    UE_LOG(LogHealthComponent, Display, TEXT("Damage: %f"), Damage);
 }
