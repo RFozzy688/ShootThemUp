@@ -3,8 +3,6 @@
 
 #include "Components/STUHealthComponent.h"
 #include "GameFramework/Actor.h"
-#include "Dev/STUAceDamageType.h"
-#include "Dev/STUFireDamageType.h"
 
 DEFINE_LOG_CATEGORY_STATIC(LogHealthComponent, All, All);
 
@@ -25,6 +23,7 @@ void USTUHealthComponent::BeginPlay()
     Super::BeginPlay();
 
     Health = MaxHealth;
+    OnHealthChanged.Broadcast(Health);
     
     // получение Actor-а который владеет этим компонентом т.е. нашего ASTUBaseCharacter
     AActor* ComponentOwner = GetOwner();
@@ -47,19 +46,13 @@ void USTUHealthComponent::TickComponent(float DeltaTime, ELevelTick TickType, FA
 void USTUHealthComponent::OnTakeAnyDamage(
     AActor* DamagedActor, float Damage, const UDamageType* DamageType, AController* InstigatedBy, AActor* DamageCauser)
 {
-    Health -= Damage;
+    if (Damage <= 0.f || IsDead()) return;
 
-    UE_LOG(LogHealthComponent, Display, TEXT("Damage: %f"), Damage);
+    Health = FMath::Clamp(Health - Damage, 0.f, MaxHealth);
+    OnHealthChanged.Broadcast(Health);
 
-    if (DamageType)
+    if (IsDead())
     {
-        if (DamageType->IsA<USTUFireDamageType>())
-        {
-            UE_LOG(LogHealthComponent, Display, TEXT("So hot"));
-        }
-        else if (DamageType->IsA<USTUAceDamageType>())
-        {
-            UE_LOG(LogHealthComponent, Display, TEXT("So coold"));
-        }
+        OnDeath.Broadcast();
     }
 }
