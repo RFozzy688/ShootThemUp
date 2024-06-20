@@ -36,13 +36,13 @@ protected:
     UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Heal")
     bool AutoHeal = true;
 
-    UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Heal")
+    UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Heal", meta = (EditCondition = "AutoHeal"))
     float HealUpdateTime = 1.f;
 
-    UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Heal")
+    UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Heal", meta = (EditCondition = "AutoHeal"))
     float HealDelay = 3.f;
 
-    UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Heal")
+    UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Heal", meta = (EditCondition = "AutoHeal"))
     float HealModifier = 5.f;
 
 public:	
