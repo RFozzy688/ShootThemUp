@@ -17,6 +17,8 @@ public:
     // Sets default values for this actor's properties
     ASTUBaseWeapon();
 
+    virtual void Fire();
+
 protected:
     // Called when the game starts or when spawned
     virtual void BeginPlay() override;
@@ -30,9 +32,11 @@ protected:
     UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
     float TraceMaxDistance = 1500.f;
 
-public:
-
-    virtual void Fire();
+    APlayerController* GetPlayerController() const;
+    bool GetPlayerViewPoint(FVector& ViewLocation, FRotator& ViewRotation) const;
+    FVector GetMuzzleWorldLocation() const;
+    bool GetTraceData(FVector& TraceStart, FVector& TraceEnd) const;
+    void MakeHit(FHitResult& HitResult, const FVector& TraceStart, const FVector& TraceEnd);
 
     void MakeShot();
 
