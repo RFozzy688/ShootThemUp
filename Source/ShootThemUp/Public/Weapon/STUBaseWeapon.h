@@ -24,10 +24,16 @@ protected:
     UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Component")
     USkeletalMeshComponent* WeaponMesh;
 
-public:	
-    // Called every frame
-    virtual void Tick(float DeltaTime) override;
+    UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
+    FName MuzzleSocketName = "MuzzleFlashSocket";
+
+    UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
+    float TraceMaxDistance = 1500.f;
+
+public:
 
     virtual void Fire();
+
+    void MakeShot();
 
 };

@@ -3,6 +3,10 @@
 
 #include "Weapon/STUBaseWeapon.h"
 #include "Components/SkeletalMeshComponent.h"
+#include "Engine/World.h"
+#include "DrawDebugHelpers.h"
+#include "GameFramework/Character.h"
+#include "GameFramework/Controller.h"
 
 DEFINE_LOG_CATEGORY_STATIC(LogBaseWeapon, All, All);
 
@@ -21,17 +25,52 @@ void ASTUBaseWeapon::BeginPlay()
 {
     Super::BeginPlay();
     
-}
-
-// Called every frame
-void ASTUBaseWeapon::Tick(float DeltaTime)
-{
-    Super::Tick(DeltaTime);
-
+    check(WeaponMesh);
 }
 
 void ASTUBaseWeapon::Fire() 
 {
     UE_LOG(LogBaseWeapon, Display, TEXT("Fire"));
+
+    MakeShot();
+}
+
+void ASTUBaseWeapon::MakeShot()
+{
+    if (!GetWorld()) return;
+
+    const auto Player = Cast<ACharacter>(GetOwner());
+    if (!Player) return;
+
+    const auto Controller = Player->GetController<APlayerController>();
+    if (!Controller) return;
+
+    FVector ViewLocation;
+    FRotator ViewRotation;
+    Controller->GetPlayerViewPoint(ViewLocation, ViewRotation);
+
+    const FTransform SocketTransform = WeaponMesh->GetSocketTransform(MuzzleSocketName);
+    const FVector TraceStart = ViewLocation;  // SocketTransform.GetLocation();
+    const FVector ShootDirection = ViewRotation.Vector();  // SocketTransform.GetRotation().GetForwardVector();
+    const FVector TraceEnd = TraceStart + ShootDirection * TraceMaxDistance;
+
+    FCollisionQueryParams CollisionParams;
+    CollisionParams.AddIgnoredActor(Player);
+
+    FHitResult HitResult;
+    GetWorld()->LineTraceSingleByChannel(HitResult, TraceStart, TraceEnd, 
+        ECollisionChannel::ECC_Visibility, CollisionParams);
+
+    if (HitResult.bBlockingHit)
+    {
+        DrawDebugLine(GetWorld(), SocketTransform.GetLocation(), HitResult.ImpactPoint, FColor::Red, false, 3.f, 0, 3.f);
+        DrawDebugSphere(GetWorld(), HitResult.ImpactPoint, 10.f, 24, FColor::Red, false, 3.f);
+
+        UE_LOG(LogBaseWeapon, Display, TEXT("Bone: %s"), *HitResult.BoneName.ToString());
+    }
+    else
+    {
+        DrawDebugLine(GetWorld(), SocketTransform.GetLocation(), TraceEnd, FColor::Green, false, 3.f, 0, 3.f);
+    }
 }
 
