@@ -50,10 +50,12 @@ void ASTUBaseWeapon::MakeShot()
 
     if (HitResult.bBlockingHit)
     {
+        MakeDamage(HitResult);
+
         DrawDebugLine(GetWorld(), GetMuzzleWorldLocation(), HitResult.ImpactPoint, FColor::Red, false, 3.f, 0, 3.f);
         DrawDebugSphere(GetWorld(), HitResult.ImpactPoint, 10.f, 24, FColor::Red, false, 3.f);
 
-        UE_LOG(LogBaseWeapon, Display, TEXT("Bone: %s"), *HitResult.BoneName.ToString());
+        //UE_LOG(LogBaseWeapon, Display, TEXT("Bone: %s"), *HitResult.BoneName.ToString());
     }
     else
     {
@@ -131,4 +133,12 @@ bool ASTUBaseWeapon::CheckShootingAngle(FVector ImpactPoint)
     if (Degrees >= 100.f) return true;
 
     return false;
+}
+
+void ASTUBaseWeapon::MakeDamage(const FHitResult& HitResult)
+{
+    const auto DamageActor = HitResult.GetActor();
+    if (!DamageActor) return;
+
+    DamageActor->TakeDamage(DamageAmount, FDamageEvent(), GetPlayerController(), this);
 }

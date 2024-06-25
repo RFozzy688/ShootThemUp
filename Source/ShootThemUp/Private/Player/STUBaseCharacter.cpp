@@ -8,6 +8,7 @@
 #include "Components/STUCharacterMovementComponent.h"
 #include "Components/STUHealthComponent.h"
 #include "Components/TextRenderComponent.h"
+#include "Components/CapsuleComponent.h"
 #include "GameFramework/Controller.h"
 #include "Weapon/STUBaseWeapon.h"
 #include "Components/STUWeaponComponent.h"
@@ -131,6 +132,8 @@ void ASTUBaseCharacter::OnDeath()
     {
         Controller->ChangeState(NAME_Spectating);
     }
+
+    GetCapsuleComponent()->SetCollisionResponseToAllChannels(ECollisionResponse::ECR_Ignore);
 }
 
 void ASTUBaseCharacter::OnHealthChanged(float Health) 
@@ -141,11 +144,11 @@ void ASTUBaseCharacter::OnHealthChanged(float Health)
 void ASTUBaseCharacter::OnGroundLanded(const FHitResult& Hit) 
 {
     const auto FallVelocityZ = -GetCharacterMovement()->Velocity.Z;
-    UE_LOG(LogBaseCharacter, Display, TEXT("Velocity: %f"), FallVelocityZ);
+    //UE_LOG(LogBaseCharacter, Display, TEXT("Velocity: %f"), FallVelocityZ);
 
     if (FallVelocityZ < LandedDamageVelocity.X) return;
 
     const auto FinalDamage = FMath::GetMappedRangeValueClamped(LandedDamageVelocity, LandedDamage, FallVelocityZ);
-    UE_LOG(LogBaseCharacter, Display, TEXT("FinalDamage: %f"), FinalDamage);
+    //UE_LOG(LogBaseCharacter, Display, TEXT("FinalDamage: %f"), FinalDamage);
     TakeDamage(FinalDamage, FDamageEvent{}, nullptr, nullptr);
 }
