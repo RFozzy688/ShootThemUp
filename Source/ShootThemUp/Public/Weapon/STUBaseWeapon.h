@@ -37,6 +37,7 @@ protected:
     FVector GetMuzzleWorldLocation() const;
     bool GetTraceData(FVector& TraceStart, FVector& TraceEnd) const;
     void MakeHit(FHitResult& HitResult, const FVector& TraceStart, const FVector& TraceEnd);
+    bool CheckShootingAngle(FVector ImpactPoint);
 
     void MakeShot();
 

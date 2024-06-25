@@ -43,12 +43,17 @@ void ASTUBaseWeapon::MakeShot()
     FHitResult HitResult;
     MakeHit(HitResult, TraceStart, TraceEnd);
 
+    if (!CheckShootingAngle(HitResult.ImpactPoint)) return;
+
+    //UE_LOG(LogBaseWeapon, Display, TEXT("AngleBetween: %f"), AngleBetween);
+    //UE_LOG(LogBaseWeapon, Display, TEXT("Degrees: %f"), Degrees);
+
     if (HitResult.bBlockingHit)
     {
         DrawDebugLine(GetWorld(), GetMuzzleWorldLocation(), HitResult.ImpactPoint, FColor::Red, false, 3.f, 0, 3.f);
         DrawDebugSphere(GetWorld(), HitResult.ImpactPoint, 10.f, 24, FColor::Red, false, 3.f);
 
-        //UE_LOG(LogBaseWeapon, Display, TEXT("Bone: %s"), *HitResult.BoneName.ToString());
+        UE_LOG(LogBaseWeapon, Display, TEXT("Bone: %s"), *HitResult.BoneName.ToString());
     }
     else
     {
@@ -100,4 +105,30 @@ void ASTUBaseWeapon::MakeHit(FHitResult& HitResult, const FVector& TraceStart, c
     CollisionParams.AddIgnoredActor(GetOwner());
 
     GetWorld()->LineTraceSingleByChannel(HitResult, TraceStart, TraceEnd, ECollisionChannel::ECC_Visibility, CollisionParams);
+}
+
+bool ASTUBaseWeapon::CheckShootingAngle(FVector ImpactPoint)
+{
+    FVector MuzzleWorldLocation = GetMuzzleWorldLocation();
+    const auto Player = Cast<ACharacter>(GetOwner());
+    FVector WeaponSocketWorldLocation = Player->GetMesh()->GetSocketLocation("WeaponSocket");
+
+    FVector VectorA = WeaponSocketWorldLocation - MuzzleWorldLocation;
+    FVector VectorB = MuzzleWorldLocation - ImpactPoint;
+    FVector VectorC = WeaponSocketWorldLocation - ImpactPoint;
+
+    //DrawDebugLine(GetWorld(), WeaponSocketWorldLocation, MuzzleWorldLocation, FColor::Red, true, 3.f, 0, 1.f);
+    //DrawDebugLine(GetWorld(), MuzzleWorldLocation, ImpactPoint, FColor::Red, true, 3.f, 0, 1.f);
+    //DrawDebugLine(GetWorld(), WeaponSocketWorldLocation, ImpactPoint, FColor::Red, true, 3.f, 0, 1.f);
+
+    float A = VectorA.Size();
+    float B = VectorB.Size();
+    float C = VectorC.Size();
+
+    float AngleBetween = FMath::Acos((A * A + B * B - C * C) / (2 * A * B));
+    float Degrees = FMath::RadiansToDegrees(AngleBetween);
+
+    if (Degrees >= 100.f) return true;
+
+    return false;
 }
