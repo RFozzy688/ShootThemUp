@@ -105,11 +105,3 @@ bool ASTUBaseWeapon::CheckShootingAngle(FVector ImpactPoint)
 
     return false;
 }
-
-void ASTUBaseWeapon::MakeDamage(const FHitResult& HitResult)
-{
-    const auto DamageActor = HitResult.GetActor();
-    if (!DamageActor) return;
-
-    DamageActor->TakeDamage(DamageAmount, FDamageEvent(), GetPlayerController(), this);
-}

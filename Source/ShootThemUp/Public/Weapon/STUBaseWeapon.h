@@ -27,23 +27,17 @@ protected:
     UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Component")
     USkeletalMeshComponent* WeaponMesh;
 
-    UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
+    UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Weapon")
     FName MuzzleSocketName = "MuzzleSocket";
 
-    UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
+    UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Weapon")
     float TraceMaxDistance = 1500.f;
-
-    UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
-    float DamageAmount = 10.f;
-
-    
 
     APlayerController* GetPlayerController() const;
     bool GetPlayerViewPoint(FVector& ViewLocation, FRotator& ViewRotation) const;
     FVector GetMuzzleWorldLocation() const;    
     void MakeHit(FHitResult& HitResult, const FVector& TraceStart, const FVector& TraceEnd);
     bool CheckShootingAngle(FVector ImpactPoint);
-    void MakeDamage(const FHitResult& HitResult);
 
     virtual void MakeShot();
     virtual bool GetTraceData(FVector& TraceStart, FVector& TraceEnd) const;
