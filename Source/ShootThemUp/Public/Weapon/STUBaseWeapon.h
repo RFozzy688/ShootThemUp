@@ -17,7 +17,8 @@ public:
     // Sets default values for this actor's properties
     ASTUBaseWeapon();
 
-    virtual void Fire();
+    virtual void StartFire();
+    virtual void StopFire();
 
 protected:
     // Called when the game starts or when spawned
@@ -35,6 +36,12 @@ protected:
     UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
     float DamageAmount = 10.f;
 
+    UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
+    float TimeBetweenShots = 0.1f;
+
+    UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
+    float BulletSpred = 1.5f;
+
     APlayerController* GetPlayerController() const;
     bool GetPlayerViewPoint(FVector& ViewLocation, FRotator& ViewRotation) const;
     FVector GetMuzzleWorldLocation() const;
@@ -45,4 +52,6 @@ protected:
 
     void MakeShot();
 
+private:
+    FTimerHandle ShotTimerHandle;
 };
