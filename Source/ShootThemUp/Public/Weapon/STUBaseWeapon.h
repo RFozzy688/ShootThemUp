@@ -36,22 +36,15 @@ protected:
     UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
     float DamageAmount = 10.f;
 
-    UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
-    float TimeBetweenShots = 0.1f;
-
-    UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
-    float BulletSpred = 1.5f;
+    
 
     APlayerController* GetPlayerController() const;
     bool GetPlayerViewPoint(FVector& ViewLocation, FRotator& ViewRotation) const;
-    FVector GetMuzzleWorldLocation() const;
-    bool GetTraceData(FVector& TraceStart, FVector& TraceEnd) const;
+    FVector GetMuzzleWorldLocation() const;    
     void MakeHit(FHitResult& HitResult, const FVector& TraceStart, const FVector& TraceEnd);
     bool CheckShootingAngle(FVector ImpactPoint);
     void MakeDamage(const FHitResult& HitResult);
 
-    void MakeShot();
-
-private:
-    FTimerHandle ShotTimerHandle;
+    virtual void MakeShot();
+    virtual bool GetTraceData(FVector& TraceStart, FVector& TraceEnd) const;
 };
