@@ -43,13 +43,15 @@ void ASTUBaseWeapon::MakeShot()
     FHitResult HitResult;
     MakeHit(HitResult, TraceStart, TraceEnd);
 
-    if (!CheckShootingAngle(HitResult.ImpactPoint)) return;
+    
 
     //UE_LOG(LogBaseWeapon, Display, TEXT("AngleBetween: %f"), AngleBetween);
     //UE_LOG(LogBaseWeapon, Display, TEXT("Degrees: %f"), Degrees);
 
     if (HitResult.bBlockingHit)
     {
+        if (!CheckShootingAngle(HitResult.ImpactPoint)) return;
+
         MakeDamage(HitResult);
 
         DrawDebugLine(GetWorld(), GetMuzzleWorldLocation(), HitResult.ImpactPoint, FColor::Red, false, 3.f, 0, 3.f);
