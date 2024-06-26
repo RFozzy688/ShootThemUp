@@ -9,7 +9,8 @@ public class ShootThemUpTarget : TargetRules
 	{
 		Type = TargetType.Game;
 		DefaultBuildSettings = BuildSettingsVersion.V2;
+        WindowsPlatform.PCHMemoryAllocationFactor = 2000;
 
-		ExtraModuleNames.AddRange( new string[] { "ShootThemUp" } );
+        ExtraModuleNames.AddRange( new string[] { "ShootThemUp" } );
 	}
 }
