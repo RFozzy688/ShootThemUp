@@ -24,6 +24,8 @@ void USTUHealthComponent::BeginPlay()
 {
     Super::BeginPlay();
 
+    check(MaxHealth > 0);
+
     SetHealth(MaxHealth);
     
     // получение Actor-а который владеет этим компонентом т.е. нашего ASTUBaseCharacter
