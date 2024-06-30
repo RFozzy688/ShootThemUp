@@ -7,9 +7,6 @@
 #include "STUCoreTypes.h"
 #include "STUPlayerHUDWidget.generated.h"
 
-class USTUWeaponComponent;
-class USTUHealthComponent;
-
 /**
  * 
  */
@@ -35,6 +32,4 @@ public:
     bool IsPlayerSpectating() const;
 
 private:
-    USTUWeaponComponent* GetWeaponComponent() const;
-    USTUHealthComponent* GetHealthComponent() const;
 };
