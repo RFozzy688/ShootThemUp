@@ -29,6 +29,10 @@ public:
     FWeaponUIData GetUIData() const { return UIData; }
     FAmmoData GetAmmoData() const { return CurrentAmmo; }
 
+    bool TryToAddAmmo(int32 ClipsAmount);
+    bool IsAmmoEmpty() const;
+    bool IsAmmoFull() const;
+
 protected:
     // Called when the game starts or when spawned
     virtual void BeginPlay() override;
@@ -58,7 +62,6 @@ protected:
     virtual bool GetTraceData(FVector& TraceStart, FVector& TraceEnd) const;
 
     void DecreaseAmmo();
-    bool IsAmmoEmpty() const;
     bool IsClipEmpty() const;
     void LogAmmo();
 
