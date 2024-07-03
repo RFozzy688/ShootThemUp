@@ -8,6 +8,8 @@
 #include "STUBaseWeapon.generated.h"
 
 class USkeletalMeshComponent;
+class UNiagaraSystem;
+class UNiagaraComponent;
 
 UCLASS()
 class SHOOTTHEMUP_API ASTUBaseWeapon : public AActor
@@ -52,6 +54,9 @@ protected:
     UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "UI")
     FWeaponUIData UIData;
 
+    UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "VFX")
+    UNiagaraSystem* MuzzleFX;
+
     APlayerController* GetPlayerController() const;
     bool GetPlayerViewPoint(FVector& ViewLocation, FRotator& ViewRotation) const;
     FVector GetMuzzleWorldLocation() const;    
@@ -64,6 +69,8 @@ protected:
     void DecreaseAmmo();
     bool IsClipEmpty() const;
     void LogAmmo();
+
+    UNiagaraComponent* SpawnMuzzleFX();
 
 private:
     FAmmoData CurrentAmmo;
