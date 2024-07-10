@@ -57,7 +57,6 @@ protected:
     UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "VFX")
     UNiagaraSystem* MuzzleFX;
 
-    APlayerController* GetPlayerController() const;
     bool GetPlayerViewPoint(FVector& ViewLocation, FRotator& ViewRotation) const;
     FVector GetMuzzleWorldLocation() const;    
     void MakeHit(FHitResult& HitResult, const FVector& TraceStart, const FVector& TraceEnd);
