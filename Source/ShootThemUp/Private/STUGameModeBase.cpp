@@ -105,9 +105,7 @@ void ASTUGameModeBase::GameTimerUpdate()
         }
         else
         {
-            //GameOver();
-            UE_LOG(LogSTUGameModeBase, Display, TEXT("========= GAME OVER ========="));
-            LogPlayerInfo();
+            GameOver();
         }
     }
 }
@@ -202,4 +200,20 @@ void ASTUGameModeBase::StartRespawn(AController* Controller)
     if (!RespawnComponent) return;
 
     RespawnComponent->Respawn(GameData.RespawnTime);
+}
+
+void ASTUGameModeBase::GameOver() 
+{
+    //LogPlayerInfo();
+
+    for (auto Pawn : TActorRange<APawn>(GetWorld()))
+    {
+        if (Pawn)
+        {
+            Pawn->TurnOff();
+            Pawn->DisableInput(nullptr);
+        }
+    }
+
+    //SetMatchState(ESTUMatchState::GameOver);
 }
