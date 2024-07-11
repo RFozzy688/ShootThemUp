@@ -34,7 +34,7 @@ void ASTUGameModeBase::StartPlay()
     CurrentRound = 1;
     StartRound();
 
-    //SetMatchState(ESTUMatchState::InProgress);
+    SetMatchState(ESTUMatchState::InProgress);
 }
 
 UClass* ASTUGameModeBase::GetDefaultPawnClassForController_Implementation(AController* InController)
@@ -91,7 +91,7 @@ void ASTUGameModeBase::StartRound()
 
 void ASTUGameModeBase::GameTimerUpdate() 
 {
-    UE_LOG(LogSTUGameModeBase, Display, TEXT("Time: %i / Round: %i/%i"), RoundCountDown, CurrentRound, GameData.RoundsNum);
+    //UE_LOG(LogSTUGameModeBase, Display, TEXT("Time: %i / Round: %i/%i"), RoundCountDown, CurrentRound, GameData.RoundsNum);
 
     if (--RoundCountDown == 0)
     {
@@ -215,5 +215,13 @@ void ASTUGameModeBase::GameOver()
         }
     }
 
-    //SetMatchState(ESTUMatchState::GameOver);
+    SetMatchState(ESTUMatchState::GameOver);
+}
+
+void ASTUGameModeBase::SetMatchState(ESTUMatchState State) 
+{
+    if (MatchState == State) return;
+
+    MatchState = State;
+    OnMatchStateChanged.Broadcast(MatchState);
 }

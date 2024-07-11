@@ -50,7 +50,6 @@ void ASTUBaseCharacter::Tick(float DeltaTime)
 float ASTUBaseCharacter::GetMovementDirection() const
 {
     if (GetVelocity().IsZero()) return 0.0f;
-    UE_LOG(LogBaseCharacter, Warning, TEXT("GetMovementDirection"));
     const auto VelocityNormal = GetVelocity().GetSafeNormal();
     const auto AngleBetween = FMath::Acos(FVector::DotProduct(GetActorForwardVector(), VelocityNormal));
     const auto CrossProduct = FVector::CrossProduct(GetActorForwardVector(), VelocityNormal);
