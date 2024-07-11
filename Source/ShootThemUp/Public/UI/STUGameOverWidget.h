@@ -14,9 +14,6 @@ UCLASS()
 class SHOOTTHEMUP_API USTUGameOverWidget : public UUserWidget
 {
     GENERATED_BODY()
-
-public:
-    virtual bool Initialize() override;
     
 protected:
     UPROPERTY(meta = (BindWidget))
@@ -25,13 +22,15 @@ protected:
     UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "UI")
     TSubclassOf<UUserWidget> PlayerStatRowWidgetClass;
 
-    //UPROPERTY(meta = (BindWidget))
-    //UButton* ResetLevelButton;
+    UPROPERTY(meta = (BindWidget))
+    UButton* ResetLevelButton;
+
+     virtual void NativeOnInitialized() override;
 
 private:
     void OnMatchStateChanged(ESTUMatchState State);
     void UpdatePlayersStat();
 
-    //UFUNCTION()
-    //void OnResetLevel();
+    UFUNCTION()
+    void OnResetLevel();
 };
