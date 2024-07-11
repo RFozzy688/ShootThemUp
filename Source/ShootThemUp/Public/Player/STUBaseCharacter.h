@@ -6,10 +6,8 @@
 #include "GameFramework/Character.h"
 #include "STUBaseCharacter.generated.h"
 
-class UCameraComponent;
-class USpringArmComponent;
+
 class USTUHealthComponent;
-class UTextRenderComponent;
 class USTUWeaponComponent;
 
 UCLASS()
@@ -24,22 +22,16 @@ public:
 protected:
 
     UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Component")
-    UCameraComponent* CameraComponent;
-
-    UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Component")
-    USpringArmComponent* SpringArmComponent;
-
-    UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Component")
     USTUHealthComponent* HealthComponent;
-
-    UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Component")
-    UTextRenderComponent* HealthTextComponent;
 
     UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Component")
     USTUWeaponComponent* WeaponComponent;
 
     UPROPERTY(EditDefaultsOnly, Category = "Animation")
     UAnimMontage* DeathAnimMontage;
+
+    UPROPERTY(EditDefaultsOnly, Category = "Damage")
+    float LifeSpanOnDeath = 5.0f;
 
     UPROPERTY(EditDefaultsOnly, Category = "Damage")
     FVector2D LandedDamageVelocity = FVector2D(700.f, 1000.f);
@@ -58,11 +50,8 @@ public:
     // Called every frame
     virtual void Tick(float DeltaTime) override;
 
-    // Called to bind functionality to input
-    virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
-
     UFUNCTION(BlueprintCallable, Category = "Movement")
-    bool IsRunning() const;
+    virtual bool IsRunning() const;
 
     UFUNCTION(BlueprintCallable, Category = "Movement")
     float GetMovementDirection() const;
@@ -70,15 +59,6 @@ public:
     void SetPlayerColor(const FLinearColor& Color);
 
 private:
-    bool WantsToRun = false;
-    bool IsMovingForward = false;
-
-    void MoveForward(float Amount);
-    void MoveRight(float Amount);
-
-    void OnStartRunning();
-    void OnStopRunning();
-
     void OnHealthChanged(float Health, float HealthDelta);
 
     UFUNCTION()
