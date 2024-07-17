@@ -31,13 +31,14 @@ protected:
     UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "UI")
     TSubclassOf<UUserWidget> LevelItemWidgetClass;
 
-    //UPROPERTY(Transient, meta = (BindWidgetAnim))
-    //UWidgetAnimation* HideAnimation;
+    UPROPERTY(Transient, meta = (BindWidgetAnim))
+    UWidgetAnimation* HideAnimation;
 
     //UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Sound")
     //USoundCue* StartGameSound;
 
     virtual void NativeOnInitialized() override;
+    virtual void OnAnimationFinished_Implementation(const UWidgetAnimation* Animation) override;
 
 private:
     UPROPERTY()
