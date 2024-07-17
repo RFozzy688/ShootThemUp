@@ -2,16 +2,16 @@
 
 
 #include "Menu/UI/STUMenuHUD.h"
-//#include "UI/STUBaseWidget.h"
+#include "UI/STUBaseWidget.h"
 #include "Blueprint/UserWidget.h"
 
 void ASTUMenuHUD::BeginPlay()
 {
     Super::BeginPlay();
 
-    if (const auto MenuWidget = CreateWidget<UUserWidget>(GetWorld(), MenuWidgetClass))
+    if (const auto MenuWidget = CreateWidget<USTUBaseWidget>(GetWorld(), MenuWidgetClass))
     {
         MenuWidget->AddToViewport();
-        //MenuWidget->Show();
+        MenuWidget->Show();
     }
 }
