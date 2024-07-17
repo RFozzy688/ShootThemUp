@@ -8,5 +8,5 @@
 void USTUBaseWidget::Show()
 {
     PlayAnimation(ShowAnimation);
-    //UGameplayStatics::PlaySound2D(GetWorld(), OpenSound);
+    UGameplayStatics::PlaySound2D(GetWorld(), OpenSound);
 }

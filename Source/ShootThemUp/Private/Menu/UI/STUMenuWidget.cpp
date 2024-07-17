@@ -91,7 +91,7 @@ void USTUMenuWidget::OnLevelSelected(const FLevelData& Data)
 void USTUMenuWidget::OnStartGame()
 {
     PlayAnimation(HideAnimation);
-    //UGameplayStatics::PlaySound2D(GetWorld(), StartGameSound);
+    UGameplayStatics::PlaySound2D(GetWorld(), StartGameSound);
 }
 
 void USTUMenuWidget::OnQuitGame() 
