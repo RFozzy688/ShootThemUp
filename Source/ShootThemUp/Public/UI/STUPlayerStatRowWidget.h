@@ -38,6 +38,6 @@ protected:
     UPROPERTY(meta = (BindWidget))
     UImage* PlayerIndicatorImage;
 
-    //UPROPERTY(meta = (BindWidget))
-    //UImage* TeamImage;
+    UPROPERTY(meta = (BindWidget))
+    UImage* TeamImage;
 };

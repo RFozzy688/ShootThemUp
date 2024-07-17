@@ -45,9 +45,9 @@ private:
     UFUNCTION()
     void OnLevelItemClicked();
 
-    //UFUNCTION()
-    //void OnLevelItemHovered();
+    UFUNCTION()
+    void OnLevelItemHovered();
 
-    //UFUNCTION()
-    //void OnLevelItemUnhovered();
+    UFUNCTION()
+    void OnLevelItemUnhovered();
 };
